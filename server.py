@@ -33,3 +33,11 @@ tkDisplay.pack(side=tk.LEFT, fill=tk.Y, padx=(5, 0))
 scrollBar.config(command=tkDisplay.yview)
 tkDisplay.config(yscrollcommand=scrollBar.set, background="#F4F6F7", highlightbackground="grey", state="disabled")
 clientFrame.pack(side=tk.BOTTOM, pady=(5, 10))
+
+# Creating necessary variables 
+server = None
+HOST_ADDR = '0.0.0.0'
+HOST_PORT = 5050
+client_name = " "
+clients = []
+clients_names = []
