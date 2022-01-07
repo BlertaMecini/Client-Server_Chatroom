@@ -41,3 +41,23 @@ HOST_PORT = 5050
 client_name = " "
 clients = []
 clients_names = []
+
+# Start server function
+def start_server():
+    global server, HOST_ADDR, HOST_PORT 
+    btnStart.config(state=tk.DISABLED)
+    btnStop.config(state=tk.NORMAL)
+
+    # Creating the server socket, with TCP 
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    # Binding the address 
+    server.bind((HOST_ADDR, HOST_PORT))
+    server.listen(5)  # server is listening for client connection
+    print("Server is waiting for requests")
+
+    threading._start_new_thread(accept_clients, (server, " "))
+
+    lblHost["text"] = "Host: " + HOST_ADDR
+    lblPort["text"] = "Port: " + str(HOST_PORT)
+
