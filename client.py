@@ -36,3 +36,28 @@ tkMessage.pack(side=tk.LEFT, padx=(5, 13), pady=(5, 10))
 tkMessage.config(highlightbackground="grey", state="disabled")
 tkMessage.bind("<Return>", (lambda event: getChatMessage(tkMessage.get("1.0", tk.END))))
 bottomFrame.pack(side=tk.BOTTOM)
+
+# client connection button
+def connect():
+    global username, client
+    if len(entName.get()) < 1:
+        tk.messagebox.showerror(title="ERROR!!!", message="You MUST enter your first name <e.g. John>")
+    else:
+        username = entName.get()
+        connect_to_server(username)
+
+
+# network client
+clientS = None
+client = None
+HOST_ADDR = "10.180.101.117"
+HOST_PORT = 5050
+
+# certificate files
+server_sni_hostname = 'example.com'
+server_cert = 'server.crt'
+client_cert = 'client.crt'
+client_key = 'client.key'
+
+context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH, cafile=server_cert)
+context.load_cert_chain(certfile=client_cert, keyfile=client_key)
