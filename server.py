@@ -105,3 +105,30 @@ def send_receive_client_message(client_connection, client_ip_addr):
     client_connection.close()
 
     update_client_names_display(clients_names)  # Update client names display
+
+
+# Return the index of the current client in the list of clients
+def get_client_index(client_list, curr_client):
+    idx = 0
+    for conn in client_list:
+        if conn == curr_client:
+            break
+        idx = idx + 1
+
+    return idx
+
+
+# Update client name display when a new client connects OR
+# When a connected client disconnects
+def update_client_names_display(name_list):
+    tkDisplay.config(state=tk.NORMAL)
+    tkDisplay.delete('1.0', tk.END)
+
+    for c in name_list:
+        tkDisplay.insert(tk.END, c+"\n")
+    tkDisplay.config(state=tk.DISABLED)
+
+
+window.mainloop()
+
+
