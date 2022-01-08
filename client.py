@@ -61,3 +61,24 @@ client_key = 'client.key'
 
 context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH, cafile=server_cert)
 context.load_cert_chain(certfile=client_cert, keyfile=client_key)
+
+# connection with server
+def connect_to_server(name):
+    global clientS, HOST_PORT, HOST_ADDR,client
+    try:
+        clientS = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client=context.wrap_socket(clientS, server_side=False, server_hostname=server_sni_hostname)
+        client.connect((HOST_ADDR, HOST_PORT))
+        
+        print("SSL established. Peer: {}".format(client.getpeercert()))
+        
+        client.send(name.encode()) # Send name to server after connecting
+
+        entName.config(state=tk.DISABLED)
+        btnConnect.config(state=tk.DISABLED)
+        tkMessage.config(state=tk.NORMAL)
+
+        # start a thread to keep receiving message from server
+        threading._start_new_thread(receive_message_from_server, (client, "m"))
+    except Exception as e:
+        tk.messagebox.showerror(title="ERROR!!!", message="Cannot connect to host: " + HOST_ADDR + " on port: " + str(HOST_PORT) + " Server may be Unavailable. Try again later")
