@@ -82,3 +82,28 @@ def connect_to_server(name):
         threading._start_new_thread(receive_message_from_server, (client, "m"))
     except Exception as e:
         tk.messagebox.showerror(title="ERROR!!!", message="Cannot connect to host: " + HOST_ADDR + " on port: " + str(HOST_PORT) + " Server may be Unavailable. Try again later")
+
+
+# receiving message from server
+def receive_message_from_server(sck, m):
+    while True:
+        from_server = sck.recv(4096).decode()
+
+        if not from_server: break
+
+        # display message from server on the chat window
+
+        # enable the display area and insert the text and then disable.
+        texts = tkDisplay.get("1.0", tk.END).strip()
+        tkDisplay.config(state=tk.NORMAL)
+        if len(texts) < 1:
+            tkDisplay.insert(tk.END, from_server)
+        else:
+            tkDisplay.insert(tk.END, "\n\n"+ from_server)
+
+        tkDisplay.config(state=tk.DISABLED)
+        tkDisplay.see(tk.END)
+
+        
+    sck.close()
+    window.destroy()
