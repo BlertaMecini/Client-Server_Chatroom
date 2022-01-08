@@ -107,3 +107,36 @@ def receive_message_from_server(sck, m):
         
     sck.close()
     window.destroy()
+
+# Function to retrieve client message
+def getChatMessage(msg):
+
+    msg = msg.replace('\n', '')
+    texts = tkDisplay.get("1.0", tk.END).strip()
+
+    # enable the display area and insert the text and then disable.
+    tkDisplay.config(state=tk.NORMAL)
+    if len(texts) < 1:
+        tkDisplay.insert(tk.END, "You->" + msg, "tag_your_message") # no line
+    else:
+        tkDisplay.insert(tk.END, "\n\n" + "You->" + msg, "tag_your_message")
+
+    tkDisplay.config(state=tk.DISABLED)
+
+    send_mssage_to_server(msg)
+
+    tkDisplay.see(tk.END)
+    tkMessage.delete('1.0', tk.END)
+
+
+# Sending message to server
+def send_mssage_to_server(msg):
+    client_msg = str(msg)
+    client.send(client_msg.encode())
+    if msg == "exit":
+        client.close()
+        window.destroy()
+    print("Sending message")
+
+
+window.mainloop()
