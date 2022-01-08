@@ -7,7 +7,7 @@ import ssl
 
 # Creating the window 
 window = tk.Tk()
-window.title("Sever")
+window.title("Server")
 
 # Top frame consisting of two buttons widgets (btnStart, btnStop) for starting/stopping the server
 topFrame = tk.Frame(window)
