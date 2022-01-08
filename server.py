@@ -77,12 +77,24 @@ def start_server():
     lblPort["text"] = "Port: " + str(HOST_PORT)
 
 
-
+# Stop server function
+def stop_server():
+    global server
+    btnStart.config(state=tk.NORMAL)
+    btnStop.config(state=tk.DISABLED)
+    server.close()
     
 
+# Acept clients function 
+def accept_clients(the_server, y):
+    while True:
+        clientS, addr = the_server.accept()
+        client = context.wrap_socket(clientS, server_side=True)
+        print("SSL established. Peer: {}".format(client.getpeercert()))
+        clients.append(client)
 
-
-
+        # use a thread so as not to clog the gui thread
+        threading._start_new_thread(send_receive_client_message, (client, addr))
 
 
 
