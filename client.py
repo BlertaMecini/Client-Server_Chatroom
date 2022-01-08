@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import socket
 import threading
+import ssl
 
 # Creating the window 
 window = tk.Tk()
@@ -50,7 +51,7 @@ def connect():
 # network client
 clientS = None
 client = None
-HOST_ADDR = "10.180.101.117"
+HOST_ADDR = "10.180.102.228"
 HOST_PORT = 5050
 
 # certificate files
