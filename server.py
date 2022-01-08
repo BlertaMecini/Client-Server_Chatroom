@@ -1,6 +1,8 @@
+# Necessary libraries
 import tkinter as tk
 import socket
 import threading
+import ssl
 
 
 # Creating the window 
@@ -54,6 +56,7 @@ context.verify_mode = ssl.CERT_REQUIRED
 context.load_cert_chain(certfile=server_cert, keyfile=server_key)
 context.load_verify_locations(cafile=client_certs)
 
+
 # Start server function
 def start_server():
     global server, HOST_ADDR, HOST_PORT 
@@ -72,6 +75,10 @@ def start_server():
 
     lblHost["text"] = "Host: " + HOST_ADDR
     lblPort["text"] = "Port: " + str(HOST_PORT)
+
+
+
+    
 
 
 
